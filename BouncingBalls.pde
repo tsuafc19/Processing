@@ -7,17 +7,16 @@ Applying a sort of G Force
 Author: Carlens Faustin @2011
 */
 
-
 final int ball_radius=25; 
 int windowWidth=600;
 int windowHeight=600;
 final float acceleration=1.63;
 final int leap=25;
 int numBalls = 100;//# of balls 
-Ball[] balls = new Ball[numBalls];//array containing balls
-int r=int(random(256))+0;//red
-int g=int(random(256))+0;//green
-int b=int(random(256))+0;//bleu
+Ball[] balls = new Ball[numBalls];//array
+int r=int(random(256))+0;
+int g=int(random(256))+0;
+int b=int(random(256))+0;
 
 
  
@@ -29,7 +28,7 @@ void setup() {
   smooth();
   noStroke();
   for (int i = 0; i < numBalls; i++) {
-    balls[i] = new Ball((random(width)), (random(height)), 0, 0, 5, color(r, g, b));
+    balls[i] = new Ball((random(width)), -25, 0, 0, 5, color(r, g, b));
   }
   
   
@@ -37,23 +36,20 @@ void setup() {
  
 void draw() {
   background (0);
-  drawBall(b1);
-  
-  drawBall(balls[4]);
-  
-  b1.yspeed = b1.yspeed += 0.2;
-  b1.xspeed = b1.xspeed/1.005;
-  b1.y = b1.y + b1.yspeed;
-  b1.x = b1.x + b1.xspeed;
-
-  
-
-  moveBall(b1);
-  mouseChecks(b1);
-  
-  
-}
+ //this should have drawn a ball at each increment of i when i click but i dont think its doing so
+ int i=0;
  
+  drawBall(balls[i]);
+   moveBall(balls[i]);
+  mouseChecks(balls[i]);
+  
+  i=i+1;
+  
+  }
+  
+  
+
+ //to check if mouse  was click
 void mouseChecks(Ball b) {
   if (mousePressed == true) {
     b.x = mouseX;
@@ -62,8 +58,14 @@ void mouseChecks(Ball b) {
     b.xspeed = mouseX - pmouseX;
   }
 }
- 
+ //to move ball
 void moveBall(Ball b) {
+  
+  b.yspeed = b.yspeed += 0.2;
+  b.xspeed = b.xspeed/1.005;
+  b.y = b.y + b.yspeed;
+  b.x = b.x + b.xspeed;
+  
   if (b.y +ball_radius>= height ) {
     b.y = height - ball_radius;
     b.yspeed = -b.yspeed/acceleration;
@@ -75,12 +77,13 @@ void moveBall(Ball b) {
   }
   if (b.x >= width -ball_radius) {
     b.x = width -ball_radius;
-    b.xspeed = -b.xspeed/1.10;
+    b.xspeed = -b.xspeed/acceleration;
   }
   if (b.x <= ball_radius) {
     b.x = ball_radius;
-    b.xspeed = -b.xspeed/1.10;
+    b.xspeed = -b.xspeed/acceleration;
   }
+  
 }
  
 
